@@ -63,6 +63,15 @@ export function HTML_TEMPLATE (siteName, siteIcon, bgimgURL, githubURL, blogURL,
                 <label for="registrationDate"><i class="fa fa-calendar"></i> 注册时间 (YYYY-MM-DD)</label>
                 <input type="date" id="registrationDate" required>
 
+                <label for="renewalPeriod"><i class="fas fa-history"></i> 续费周期 (可选)</label>
+                <div class="renewal-group">
+                    <input type="number" id="renewalPeriod" min="1" max="100" placeholder="例如: 1, 填写后会自动计算到期时间" value="">
+                    <select id="renewalUnit">
+                        <option value="year">年</option>
+                        <option value="month">月</option>
+                    </select>
+                </div>
+
                 <label for="expirationDate"><i class="fa fa-calendar"></i> 到期时间 (YYYY-MM-DD)</label>
                 <input type="date" id="expirationDate" required>
 
@@ -83,8 +92,7 @@ export function HTML_TEMPLATE (siteName, siteIcon, bgimgURL, githubURL, blogURL,
         </div>
     </div>
 
-    <div id="summary" class="summary-container">
-        </div>
+    <div id="summary" class="summary-container"></div>
 
     <div class="controls-container">
         <div id="groupTabs" class="tabs-container">
@@ -92,10 +100,10 @@ export function HTML_TEMPLATE (siteName, siteIcon, bgimgURL, githubURL, blogURL,
             <button class="tab-btn" data-group="一级域名">一级域名</button>
             <button class="tab-btn" data-group="二级域名">二级域名</button>
             <button class="tab-btn" data-group="未分组">未分组</button>
-            </div>
+        </div>
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchBox" placeholder="搜索域名...">
+            <input type="text" id="searchBox" placeholder="支持全文模糊搜索">
         </div>
     </div>
 
