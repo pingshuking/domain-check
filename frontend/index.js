@@ -1,20 +1,46 @@
 import { HTML_CSS } from './style';
 import { HTML_JS } from './script';
 
-export const HTML_TEMPLATE = `
+export function HTML_TEMPLATE (siteName, siteIcon, bgimgURL, githubURL, blogURL, blogName) {
+    const currentYear = new Date().getFullYear();
+    const bgimgStyle = bgimgURL ? 
+        `body { 
+            background-color: #e9eceb;
+            background-image: url('${bgimgURL}'); 
+            background-size: cover; 
+            background-attachment: fixed; 
+            background-position: center;
+        }` : 
+        '';
+    const footerHTML = `
+        <div class="footer">
+            <p>
+                <span>Copyright © ${currentYear} Yutian81</span><span>|</span>
+                <a href="${githubURL}" target="_blank">
+                    <i class="fab fa-github"></i> Github</a><span>|</span>
+                <a href="${blogURL}" target="_blank">
+                    <i class="fas fa-blog"></i> ${blogName}</a>
+            </p>
+        </div>
+    `;
+    
+    return `
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>域名到期监控</title>
-    <link id="faviconLink" rel="icon" href="https://pan.811520.xyz/icon/domain-check.png" type="image/png">
+    <title>${siteName}</title>
+    <link id="faviconLink" rel="icon" href="${siteIcon}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>${HTML_CSS}</style>
+    <style>
+        ${bgimgStyle} 
+        ${HTML_CSS}
+    </style>
 </head>
 <body>
     <div class="header">
-        <h1 id="siteTitle"><i class="fas fa-clock"></i></h1>
+        <h1 id="siteTitle"><i class="fas fa-clock"></i> ${siteName}</h1>
         <div class="action-buttons">
             <button id="addDomainBtn" class="action-btn add-btn"><i class="fas fa-plus"></i> 添加域名</button>
             <button id="exportDataBtn" class="action-btn export-btn"><i class="fas fa-download"></i> 导出数据</button>
@@ -30,27 +56,27 @@ export const HTML_TEMPLATE = `
             <form id="domainForm">
                 <input type="hidden" id="editOriginalDomain">
                 <label for="domain"><i class="fa fa-globe"></i> 域名</label>
+                <input type="text" id="domain" placeholder="例如: example.com 或 example.com.cn" required>
 
-                <input type="text" id="domain" required>
                 <div id="domainFillWarning" class="form-warning"></div>
 
                 <label for="registrationDate"><i class="fa fa-calendar"></i> 注册时间 (YYYY-MM-DD)</label>
-                <input type="date" id="registrationDate" required maxlength="10">
+                <input type="date" id="registrationDate" required>
 
                 <label for="expirationDate"><i class="fa fa-calendar"></i> 到期时间 (YYYY-MM-DD)</label>
-                <input type="date" id="expirationDate" required maxlength="10">
+                <input type="date" id="expirationDate" required>
 
                 <label for="system"><i class="fa fa-registered"></i> 注册商名称</label>
-                <input type="text" id="system" required>
+                <input type="text" id="system" placeholder="例如: cloudflare" required>
 
                 <label for="systemURL"><i class="fa fa-link"></i> 注册商地址</label>
-                <input type="url" id="systemURL" required>
+                <input type="url" id="systemURL" placeholder="例如: https://dash.cloudflare.com" required>
 
-                <label for="registerAccount"><i class="fa fa-user"></i> 注册账号</label>
-                <input type="text" id="registerAccount">
+                <label for="registerAccount"><i class="fa fa-user"></i> 注册账号 (可选)</label>
+                <input type="text" id="registerAccount" placeholder="例如: admin@example.com">
 
-                <label for="groups"><i class="fa fa-tags"></i> 分组 (多个分组用英文逗号分隔)</label>
-                <input type="text" id="groups" placeholder="例如: 主要, 个人, 待续费">
+                <label for="groups"><i class="fa fa-tags"></i> 分组 (可选)</label>
+                <input type="text" id="groups" placeholder="多个分组可用英文逗号分隔, 例如: 主要, 个人, 待续费">
 
                 <button type="submit"><i class="fa fa-save"></i> 保存</button>
             </form>
@@ -75,9 +101,10 @@ export const HTML_TEMPLATE = `
 
     <div id="domainList" class="domain-grid"></div>
     <div id="pagination" class="pagination"></div>
-    <div id="footer"></div>
+    <div id="footer">${footerHTML}</div>
 
     <script>${HTML_JS}</script>
 </body>
 </html>
-`;
+    `;
+}
