@@ -113,7 +113,10 @@ curl -X POST https://your-domain-check.pages.dev/api/domains \
 - 返回示例
 
 ```json
-{"success": true, "domain": "example.com"}
+{
+  "success": true, 
+  "domain": "example.com"
+}
 ```
 
 ## PUT /api/domains —— 批量更新域名列表（用于编辑）
@@ -134,7 +137,10 @@ curl -X PUT https://your-domain-check.pages.dev/api/domains \
 - 返回示例
 
 ```json
-{"success": true, "count": 2}
+{
+  "success": true, 
+  "count": 2
+}
 ```
 
 ## DELETE /api/domains —— 删除域名
@@ -151,7 +157,10 @@ curl -X DELETE https://your-domain-check.pages.dev/api/domains \
 - 返回示例：删除单个域名
 
 ```json
-{"success": true, "message": "域名 domain-to-delete.com 已删除。"}
+{
+  "success": true, 
+  "message": "域名 domain-to-delete.com 已删除"
+}
 ```
 
 - 请求示例：删除多个域名
@@ -170,5 +179,39 @@ curl -X DELETE https://your-domain-check.pages.dev/api/domains \
   "success": true,
   "message": "成功删除 2 个域名。",
   "deletedCount": 2
+}
+```
+
+## GET /api/whois —— 手动检查域名到期情况
+
+- 请求示例（无需鉴权）
+
+```bash
+curl -X GET https://your-domain-check.pages.dev/api/whois/<要查询的域名>
+```
+
+- 返回示例
+
+```json
+{
+  "success": true,
+  "data": {
+    "domain": "github.com",
+    "creationDate": "2007-10-09T18:20:50Z",
+    "updatedDate": "2024-09-07T09:16:32Z",
+    "expiryDate": "2026-10-09T18:20:50Z",
+    "registrar": "MarkMonitor",
+    "registrarUrl": "http://www.markmonitor.com",
+    "nameServers": [
+      "dns1.p08.nsone.net",
+      "dns2.p08.nsone.net",
+      "dns3.p08.nsone.net",
+      "dns4.p08.nsone.net",
+      "ns-1283.awsdns-32.org",
+      "ns-1707.awsdns-21.co.uk",
+      "ns-421.awsdns-52.com",
+      "ns-520.awsdns-01.net"
+    ]
+  }
 }
 ```
